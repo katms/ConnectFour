@@ -3,3 +3,6 @@ build: main.cpp ConnectFour.o
 
 ConnectFour.o: ConnectFour.cpp
 	g++ -Wall -std=c++11 -c $^ -o $@
+	
+clean:
+	rm -f *.o connectfour
