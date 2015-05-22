@@ -23,5 +23,5 @@ class ConnectFour
 		
 		SDL_Rect board[COLUMNS][ROWS];
 		SDL_Texture *tile;
-		static const int TILE_LENGTH = 100;
+		static const int TILE_LENGTH = 75;
 };
