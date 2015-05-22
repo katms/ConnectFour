@@ -31,9 +31,18 @@ ConnectFour::ConnectFour() {
 		}
 	}
 	const char *tile_path = "Images/tile.png";
-	tile = IMG_LoadTexture(renderer, tile_path);
-	if(nullptr == tile) {
+	SDL_Surface *surface = IMG_Load(tile_path);
+	if(nullptr == surface) {
 		printf("Could not load %s: %s\n", tile_path, SDL_GetError());
+		tile = nullptr;
+	}
+	
+	else {
+		SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xff, 0xff, 0xff));
+		tile = SDL_CreateTextureFromSurface(renderer, surface);
+		if(nullptr == tile) {
+			printf("Could not load %s: %s\n", tile_path, SDL_GetError());
+		}
 	}
 		
 	for(unsigned i=0; i<COLUMNS; ++i) {
