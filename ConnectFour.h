@@ -15,13 +15,13 @@ class ConnectFour
 		
 		bool running;
 		
-		const unsigned HEIGHT = ROWS*tile_length;
-		const unsigned WIDTH = (1+COLUMNS)*tile_length;
+		const unsigned HEIGHT = ROWS*TILE_LENGTH;
+		const unsigned WIDTH = (1+COLUMNS)*TILE_LENGTH;
 		
 		static const unsigned ROWS = 6;
 		static const unsigned COLUMNS = 7;
 		
 		SDL_Rect board[COLUMNS][ROWS];
 		SDL_Texture *tile;
-		static const int tile_length = 100;
+		static const int TILE_LENGTH = 100;
 };
