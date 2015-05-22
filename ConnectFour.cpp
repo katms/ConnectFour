@@ -43,6 +43,8 @@ ConnectFour::ConnectFour() {
 		if(nullptr == tile) {
 			printf("Could not load %s: %s\n", tile_path, SDL_GetError());
 		}
+		
+		SDL_FreeSurface(surface);
 	}
 		
 	for(unsigned i=0; i<COLUMNS; ++i) {
