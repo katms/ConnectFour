@@ -35,6 +35,17 @@ ConnectFour::ConnectFour() {
 	if(nullptr == tile) {
 		printf("Could not load %s: %s\n", tile_path, SDL_GetError());
 	}
+		
+	for(unsigned i=0; i<COLUMNS; ++i) {
+		for(unsigned j=0; j<ROWS; ++j) {
+			//leave a row's worth of space at top
+			board[i][j].x = i*TILE_LENGTH;
+			board[i][j].y = (j+1)*TILE_LENGTH;
+			
+			board[i][j].w = TILE_LENGTH;
+			board[i][j].h = TILE_LENGTH;
+		}
+	}
 }
 
 ConnectFour::~ConnectFour() {
@@ -45,10 +56,6 @@ ConnectFour::~ConnectFour() {
 }
 
 void ConnectFour::game_loop() {
-
-	SDL_Rect& test = board[0][0];
-	test.w = test.h = TILE_LENGTH;
-	test.x = test.y = 0;
 	
 	while(running) {
 		SDL_PollEvent(&event);
@@ -60,8 +67,11 @@ void ConnectFour::game_loop() {
 			running = false;
 		}
 		
-		SDL_RenderCopy(renderer, tile, NULL, &test);
-	
+		for(unsigned i=0; i<COLUMNS; ++i) {
+			for(unsigned j=0; j<ROWS; ++j) {
+				SDL_RenderCopy(renderer, tile, NULL, &board[i][j]);
+			}
+		}
 	
 		SDL_RenderPresent(renderer);
 	}
