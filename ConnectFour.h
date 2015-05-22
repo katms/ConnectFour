@@ -17,5 +17,11 @@ class ConnectFour
 		
 		const unsigned HEIGHT = 480;
 		const unsigned WIDTH = 480;
-
+		
+		static const unsigned ROWS = 6;
+		static const unsigned COLUMNS = 7;
+		
+		SDL_Rect board[COLUMNS][ROWS];
+		SDL_Texture *tile;
+		static const int tile_length = 200;
 };

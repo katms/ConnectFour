@@ -1,5 +1,6 @@
 #include "ConnectFour.h"
 #include <stdio.h>
+#include <SDL2/SDL_image.h>
 
 ConnectFour::ConnectFour() {
 	running = true;
@@ -29,6 +30,11 @@ ConnectFour::ConnectFour() {
 			running = false;
 		}
 	}
+	const char *tile_path = "Images/tile.png";
+	tile = IMG_LoadTexture(renderer, tile_path);
+	if(nullptr == tile) {
+		printf("Could not load %s: %s\n", tile_path, SDL_GetError());
+	}
 }
 
 ConnectFour::~ConnectFour() {
@@ -40,6 +46,10 @@ ConnectFour::~ConnectFour() {
 
 void ConnectFour::game_loop() {
 
+	SDL_Rect& test = board[0][0];
+	test.w = test.h = 100;
+	test.x = test.y = 0;
+	
 	while(running) {
 		SDL_PollEvent(&event);
 
@@ -49,6 +59,8 @@ void ConnectFour::game_loop() {
 		if(SDL_QUIT == event.type) {
 			running = false;
 		}
+		
+		SDL_RenderCopy(renderer, tile, NULL, &test);
 	
 	
 		SDL_RenderPresent(renderer);
