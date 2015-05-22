@@ -15,8 +15,8 @@ class ConnectFour
 		
 		bool running;
 		
-		const unsigned HEIGHT = ROWS*TILE_LENGTH;
-		const unsigned WIDTH = (1+COLUMNS)*TILE_LENGTH;
+		const unsigned HEIGHT = (1+ROWS)*TILE_LENGTH;
+		const unsigned WIDTH = COLUMNS*TILE_LENGTH;
 		
 		static const unsigned ROWS = 6;
 		static const unsigned COLUMNS = 7;
