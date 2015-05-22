@@ -47,7 +47,7 @@ ConnectFour::~ConnectFour() {
 void ConnectFour::game_loop() {
 
 	SDL_Rect& test = board[0][0];
-	test.w = test.h = 100;
+	test.w = test.h = tile_length;
 	test.x = test.y = 0;
 	
 	while(running) {
