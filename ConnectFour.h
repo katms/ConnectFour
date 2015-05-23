@@ -28,6 +28,8 @@ class ConnectFour
 		SDL_Texture *tile;
 		static const int TILE_LENGTH = 75;
 		
+		void drop_token(int column);
+		
 		//loads a surface at path, sets colorkey, creates texture from surface and returns it
 		SDL_Texture* load_texture_with_transparency(const char* path);
 };

@@ -8,6 +8,11 @@ class Tile
 		//relative coordinates
 		Tile(int x, int y);
 		
+		enum value {EMPTY, RED, BLACK};
+		bool is_empty() const;
+		value get_color() const;
+		void set_color(value new_color);
+		
 		//set class texture (once) after setting up SDL,
 		//since Tile is not responsible for loading it
 		static void setup(SDL_Renderer *rn, SDL_Texture *tx);
@@ -18,6 +23,8 @@ class Tile
 		
 	private:
 		SDL_Rect rect;
+		value color = EMPTY;
+		
 		
 		static SDL_Texture *texture;
 		static SDL_Renderer *renderer;

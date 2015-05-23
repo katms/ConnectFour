@@ -20,3 +20,17 @@ void Tile::setup(SDL_Renderer *rn, SDL_Texture *tx) {
 		texture = tx;
 	}
 }
+
+bool Tile::is_empty() const {
+	return (EMPTY == color);
+}
+
+Tile::value Tile::get_color() const {
+	return color;
+}
+
+void Tile::set_color(value new_color) {
+	if(EMPTY == color) {
+		color = new_color;
+	}
+}
