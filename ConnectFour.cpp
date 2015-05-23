@@ -87,8 +87,9 @@ void ConnectFour::game_loop() {
 		
 		handle_input();
 		
-		if(is_won()) {
+		if(!printed_msg && is_won()) {
 			printf("You win!\n");
+			printed_msg = true;
 		}
 	
 		SDL_RenderPresent(renderer);

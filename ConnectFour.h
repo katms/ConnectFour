@@ -25,6 +25,7 @@ class ConnectFour
 		void handle_input();
 		
 		bool is_won() const;
+		bool printed_msg = false;
 		
 		//leave a space at the top
 		const unsigned HEIGHT = (1+ROWS)*TILE_LENGTH;
