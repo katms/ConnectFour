@@ -13,6 +13,8 @@ class Tile
 		value get_color() const;
 		void set_color(value new_color);
 		
+		bool operator==(const Tile& other) const;
+		
 		//set class texture (once) after setting up SDL,
 		//since Tile is not responsible for loading it
 		static void setup(SDL_Renderer *rn, SDL_Texture *tx, SDL_Texture *rd);

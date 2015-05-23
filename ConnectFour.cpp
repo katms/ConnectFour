@@ -135,5 +135,17 @@ void ConnectFour::drop_token(int column) {
 }
 
 bool ConnectFour::is_won() const {
-	return true;
+	for(unsigned i=0; i<COLUMNS-3; ++i) {
+		for(unsigned j=0; j<ROWS; ++j) {
+			if(board[i][j].get_color()!=Tile::EMPTY && 
+				board[i][j]==board[i+1][j] && 
+				board[i+1][j]==board[i+2][j] && 
+				board[i+2][j]==board[i+3][j]) {
+				return true;
+			}
+		}
+	}
+	
+	//exhausted all possibilities
+	return false;
 }

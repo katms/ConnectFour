@@ -51,3 +51,7 @@ void Tile::set_color(value new_color) {
 		color = new_color;
 	}
 }
+
+bool Tile::operator==(const Tile& other) const {
+	return (color == other.color);
+}
