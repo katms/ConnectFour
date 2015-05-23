@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include "Tile.h"
 
 class ConnectFour
 {
@@ -23,7 +24,7 @@ class ConnectFour
 		static const unsigned ROWS = 6;
 		static const unsigned COLUMNS = 7;
 		
-		SDL_Rect board[COLUMNS][ROWS];
+		Tile board[COLUMNS][ROWS];
 		SDL_Texture *tile;
 		static const int TILE_LENGTH = 75;
 		

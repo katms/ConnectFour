@@ -36,14 +36,17 @@ ConnectFour::ConnectFour() {
 	//calculate each tile's location
 	for(unsigned i=0; i<COLUMNS; ++i) {
 		for(unsigned j=0; j<ROWS; ++j) {
-			//leave a row's worth of space at top
+			/*//leave a row's worth of space at top
 			board[i][j].x = i*TILE_LENGTH;
 			board[i][j].y = (j+1)*TILE_LENGTH;
 			
 			board[i][j].w = TILE_LENGTH;
-			board[i][j].h = TILE_LENGTH;
+			board[i][j].h = TILE_LENGTH;*/
+			board[i][j] = Tile(i,j);
 		}
 	}
+	
+	Tile::setup(renderer, tile);
 }
 
 ConnectFour::~ConnectFour() {
@@ -88,7 +91,7 @@ void ConnectFour::game_loop() {
 		//draw
 		for(unsigned i=0; i<COLUMNS; ++i) {
 			for(unsigned j=0; j<ROWS; ++j) {
-				SDL_RenderCopy(renderer, tile, NULL, &board[i][j]);
+				board[i][j].draw();//SDL_RenderCopy(renderer, tile, NULL, &board[i][j]);
 			}
 		}
 		
