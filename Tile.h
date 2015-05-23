@@ -17,7 +17,7 @@ class Tile
 		
 		//set class texture (once) after setting up SDL,
 		//since Tile is not responsible for loading it
-		static void setup(SDL_Renderer *rn, SDL_Texture *tx, SDL_Texture *rd);
+		static void setup(SDL_Renderer *rn, SDL_Texture *tx, SDL_Texture *rd, SDL_Texture *bk);
 		
 		void draw();
 	
@@ -30,6 +30,7 @@ class Tile
 		
 		static SDL_Texture *texture;
 		static SDL_Texture *red;
+		static SDL_Texture *black;
 		
 		static SDL_Renderer *renderer;
 

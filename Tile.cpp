@@ -3,6 +3,8 @@
 SDL_Renderer* Tile::renderer = nullptr;
 SDL_Texture* Tile::texture = nullptr;
 SDL_Texture* Tile::red = nullptr;
+SDL_Texture* Tile::black = nullptr;
+
 
 Tile::Tile(int x, int y) {
 	rect.x = x*TILE_LENGTH;
@@ -24,7 +26,7 @@ void Tile::draw() {
 	SDL_RenderCopy(renderer, texture, NULL, &rect);
 }
 
-void Tile::setup(SDL_Renderer *rn, SDL_Texture *tx, SDL_Texture *rd) {
+void Tile::setup(SDL_Renderer *rn, SDL_Texture *tx, SDL_Texture *rd, SDL_Texture *bk) {
 	if(nullptr == renderer) { 
 		renderer = rn;
 	}
@@ -35,6 +37,10 @@ void Tile::setup(SDL_Renderer *rn, SDL_Texture *tx, SDL_Texture *rd) {
 	
 	if(nullptr == red) {
 		red = rd;
+	}
+	
+	if(nullptr == black) {
+		black = bk;
 	}
 }
 

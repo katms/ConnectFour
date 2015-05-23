@@ -34,6 +34,8 @@ ConnectFour::ConnectFour() {
 	tile = load_texture_with_transparency(tile_path);
 	
 	red = load_texture_with_transparency("Images/red.png");
+	black = load_texture_with_transparency("Images/black.png");
+
 
 	//calculate each tile's location
 	for(unsigned i=0; i<COLUMNS; ++i) {
@@ -42,7 +44,7 @@ ConnectFour::ConnectFour() {
 		}
 	}
 	
-	Tile::setup(renderer, tile, red);
+	Tile::setup(renderer, tile, red, black);
 }
 
 ConnectFour::~ConnectFour() {

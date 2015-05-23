@@ -38,6 +38,7 @@ class ConnectFour
 		SDL_Texture *tile;
 		static const int TILE_LENGTH = 75;
 		SDL_Texture *red;
+		SDL_Texture *black;
 		
 		void drop_token(int column);
 		
