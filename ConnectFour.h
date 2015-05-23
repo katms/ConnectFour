@@ -27,6 +27,7 @@ class ConnectFour
 		Tile board[COLUMNS][ROWS];
 		SDL_Texture *tile;
 		static const int TILE_LENGTH = 75;
+		SDL_Texture *red;
 		
 		void drop_token(int column);
 		

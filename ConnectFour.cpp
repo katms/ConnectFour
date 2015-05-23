@@ -32,6 +32,8 @@ ConnectFour::ConnectFour() {
 	}
 	const char *tile_path = "Images/tile.png";
 	tile = load_texture_with_transparency(tile_path);
+	
+	red = load_texture_with_transparency("Images/red.png");
 
 	//calculate each tile's location
 	for(unsigned i=0; i<COLUMNS; ++i) {
@@ -40,7 +42,7 @@ ConnectFour::ConnectFour() {
 		}
 	}
 	
-	Tile::setup(renderer, tile);
+	Tile::setup(renderer, tile, red);
 }
 
 ConnectFour::~ConnectFour() {

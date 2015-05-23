@@ -2,6 +2,7 @@
 
 SDL_Renderer* Tile::renderer = nullptr;
 SDL_Texture* Tile::texture = nullptr;
+SDL_Texture* Tile::red = nullptr;
 
 Tile::Tile(int x, int y) {
 	rect.x = x*TILE_LENGTH;
@@ -11,13 +12,29 @@ Tile::Tile(int x, int y) {
 }
 
 void Tile::draw() {
+	switch(color) {
+		case RED:
+			SDL_RenderCopy(renderer, red, NULL, &rect);
+			break;
+		case BLACK:
+			//left blank
+		case EMPTY:
+			break;
+	}
 	SDL_RenderCopy(renderer, texture, NULL, &rect);
 }
 
-void Tile::setup(SDL_Renderer *rn, SDL_Texture *tx) {
-	if(nullptr == renderer && nullptr == texture) {
+void Tile::setup(SDL_Renderer *rn, SDL_Texture *tx, SDL_Texture *rd) {
+	if(nullptr == renderer) { 
 		renderer = rn;
-		texture = tx;
+	}
+	
+	if(nullptr == texture) {
+		texture = tx;	
+	}
+	
+	if(nullptr == red) {
+		red = rd;
 	}
 }
 
