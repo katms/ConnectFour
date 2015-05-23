@@ -48,6 +48,8 @@ ConnectFour::ConnectFour() {
 }
 
 ConnectFour::~ConnectFour() {
+	SDL_DestroyTexture(red);
+	SDL_DestroyTexture(black);
 	SDL_DestroyTexture(tile);
 
 	SDL_DestroyWindow(window);
