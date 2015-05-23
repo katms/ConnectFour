@@ -159,6 +159,14 @@ bool ConnectFour::is_won() const {
 						return true;
 				}
 				
+				//check upward diagonal
+				if(j>=3 &&
+					board[i][j]==board[i+1][j-1] &&
+					board[i+1][j-1]==board[i+2][j-2] &&
+					board[i+2][j-2]==board[i+3][j-3]) {
+						return true;
+				}
+				
 			}
 			
 			//check columns
