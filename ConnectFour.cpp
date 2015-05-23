@@ -83,13 +83,7 @@ void ConnectFour::game_loop() {
 		SDL_SetRenderDrawColor(renderer, 0x1c, 0x63, 0xdf, 0xff);
 		SDL_RenderClear(renderer);
 		
-		
-		//draw
-		for(unsigned i=0; i<COLUMNS; ++i) {
-			for(unsigned j=0; j<ROWS; ++j) {
-				board[i][j].draw();
-			}
-		}
+		draw();
 		
 		//handle input
 		switch(event.type) {
@@ -105,6 +99,14 @@ void ConnectFour::game_loop() {
 		}
 	
 		SDL_RenderPresent(renderer);
+	}
+}
+
+void ConnectFour::draw() {
+	for(unsigned i=0; i<COLUMNS; ++i) {
+		for(unsigned j=0; j<ROWS; ++j) {
+			board[i][j].draw();
+		}
 	}
 }
 
