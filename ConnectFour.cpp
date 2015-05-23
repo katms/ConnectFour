@@ -32,7 +32,8 @@ ConnectFour::ConnectFour() {
 	}
 	const char *tile_path = "Images/tile.png";
 	tile = load_texture_with_transparency(tile_path);
-		
+
+	//calculate each tile's location
 	for(unsigned i=0; i<COLUMNS; ++i) {
 		for(unsigned j=0; j<ROWS; ++j) {
 			//leave a row's worth of space at top
@@ -84,13 +85,14 @@ void ConnectFour::game_loop() {
 		SDL_RenderClear(renderer);
 		
 		
-		
+		//draw
 		for(unsigned i=0; i<COLUMNS; ++i) {
 			for(unsigned j=0; j<ROWS; ++j) {
 				SDL_RenderCopy(renderer, tile, NULL, &board[i][j]);
 			}
 		}
 		
+		//handle input
 		switch(event.type) {
 			case SDL_QUIT:
 				running = false;
