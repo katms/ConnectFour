@@ -107,10 +107,14 @@ void ConnectFour::handle_input() {
 			running = false;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			if(SDL_BUTTON_LEFT == event.button.button) {
+			if(SDL_BUTTON_LEFT == event.button.button && !wait_mouse) {
 				int column_clicked = mouse.x/TILE_LENGTH;
 				drop_token(column_clicked);
+				wait_mouse = true;
 			}
+			break;
+		case SDL_MOUSEBUTTONUP:
+			wait_mouse = false;
 			break;
 	}
 }

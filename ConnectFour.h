@@ -17,6 +17,10 @@ class ConnectFour
 		
 		bool running;
 		
+		//set to true between the time a button is clicked and released
+		//waiting for X milliseconds wasn't working out
+		bool wait_mouse = false;
+		
 		void draw();
 		void handle_input();
 		
