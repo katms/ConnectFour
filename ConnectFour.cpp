@@ -31,21 +31,7 @@ ConnectFour::ConnectFour() {
 		}
 	}
 	const char *tile_path = "Images/tile.png";
-	SDL_Surface *surface = IMG_Load(tile_path);
-	if(nullptr == surface) {
-		printf("Could not load %s: %s\n", tile_path, SDL_GetError());
-		tile = nullptr;
-	}
-	
-	else {
-		SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xff, 0xff, 0xff));
-		tile = SDL_CreateTextureFromSurface(renderer, surface);
-		if(nullptr == tile) {
-			printf("Could not load %s: %s\n", tile_path, SDL_GetError());
-		}
-		
-		SDL_FreeSurface(surface);
-	}
+	tile = load_texture_with_transparency(tile_path);
 		
 	for(unsigned i=0; i<COLUMNS; ++i) {
 		for(unsigned j=0; j<ROWS; ++j) {
@@ -64,6 +50,26 @@ ConnectFour::~ConnectFour() {
 	SDL_DestroyRenderer(renderer);
 	
 	SDL_Quit();
+}
+
+SDL_Texture* ConnectFour::load_texture_with_transparency(const char* path) {
+	SDL_Texture *texture;
+	SDL_Surface *surface = IMG_Load(path);
+	if(nullptr == surface) {
+		printf("Could not load %s: %s\n", path, SDL_GetError());
+		texture = nullptr;
+	}
+	
+	else {
+		SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xff, 0xff, 0xff));
+		texture = SDL_CreateTextureFromSurface(renderer, surface);
+		if(nullptr == texture) {
+			printf("Could not create texture for %s: %s\n", path, SDL_GetError());
+		}
+		
+		SDL_FreeSurface(surface);
+	}
+	return texture;
 }
 
 void ConnectFour::game_loop() {

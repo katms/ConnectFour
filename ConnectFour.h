@@ -24,4 +24,6 @@ class ConnectFour
 		SDL_Rect board[COLUMNS][ROWS];
 		SDL_Texture *tile;
 		static const int TILE_LENGTH = 75;
+		
+		SDL_Texture* load_texture_with_transparency(const char* path);
 };
