@@ -78,18 +78,28 @@ void ConnectFour::game_loop() {
 	
 	while(running) {
 		SDL_PollEvent(&event);
+		SDL_GetMouseState(&mouse.x, &mouse.y);
 
 		SDL_SetRenderDrawColor(renderer, 0x1c, 0x63, 0xdf, 0xff);
 		SDL_RenderClear(renderer);
 		
-		if(SDL_QUIT == event.type) {
-			running = false;
-		}
+		
 		
 		for(unsigned i=0; i<COLUMNS; ++i) {
 			for(unsigned j=0; j<ROWS; ++j) {
 				SDL_RenderCopy(renderer, tile, NULL, &board[i][j]);
 			}
+		}
+		
+		switch(event.type) {
+			case SDL_QUIT:
+				running = false;
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+				if(SDL_BUTTON_LEFT == event.button.button) {
+					int column_clicked = mouse.x/TILE_LENGTH;
+				}
+				break;
 		}
 	
 		SDL_RenderPresent(renderer);
