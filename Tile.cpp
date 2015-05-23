@@ -19,8 +19,10 @@ void Tile::draw() {
 			SDL_RenderCopy(renderer, red, NULL, &rect);
 			break;
 		case BLACK:
-			//left blank
+			SDL_RenderCopy(renderer, black, NULL, &rect);
+			break;
 		case EMPTY:
+			//do nothing
 			break;
 	}
 	SDL_RenderCopy(renderer, texture, NULL, &rect);
