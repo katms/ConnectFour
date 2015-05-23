@@ -24,6 +24,8 @@ class ConnectFour
 		void draw();
 		void handle_input();
 		
+		bool is_won() const;
+		
 		//leave a space at the top
 		const unsigned HEIGHT = (1+ROWS)*TILE_LENGTH;
 		const unsigned WIDTH = COLUMNS*TILE_LENGTH;

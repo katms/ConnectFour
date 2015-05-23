@@ -87,7 +87,9 @@ void ConnectFour::game_loop() {
 		
 		handle_input();
 		
-
+		if(is_won()) {
+			printf("You win!\n");
+		}
 	
 		SDL_RenderPresent(renderer);
 	}
@@ -130,4 +132,8 @@ void ConnectFour::drop_token(int column) {
 			return;
 		}
 	}
+}
+
+bool ConnectFour::is_won() const {
+	return true;
 }
