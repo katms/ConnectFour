@@ -18,6 +18,7 @@ class ConnectFour
 		bool running;
 		
 		void draw();
+		void handle_input();
 		
 		//leave a space at the top
 		const unsigned HEIGHT = (1+ROWS)*TILE_LENGTH;

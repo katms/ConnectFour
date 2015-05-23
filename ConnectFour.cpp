@@ -85,18 +85,9 @@ void ConnectFour::game_loop() {
 		
 		draw();
 		
-		//handle input
-		switch(event.type) {
-			case SDL_QUIT:
-				running = false;
-				break;
-			case SDL_MOUSEBUTTONDOWN:
-				if(SDL_BUTTON_LEFT == event.button.button) {
-					int column_clicked = mouse.x/TILE_LENGTH;
-					drop_token(column_clicked);
-				}
-				break;
-		}
+		handle_input();
+		
+
 	
 		SDL_RenderPresent(renderer);
 	}
@@ -107,6 +98,20 @@ void ConnectFour::draw() {
 		for(unsigned j=0; j<ROWS; ++j) {
 			board[i][j].draw();
 		}
+	}
+}
+
+void ConnectFour::handle_input() {
+	switch(event.type) {
+		case SDL_QUIT:
+			running = false;
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			if(SDL_BUTTON_LEFT == event.button.button) {
+				int column_clicked = mouse.x/TILE_LENGTH;
+				drop_token(column_clicked);
+			}
+			break;
 	}
 }
 
