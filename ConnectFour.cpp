@@ -139,13 +139,23 @@ bool ConnectFour::is_won() const {
 	for(unsigned i=0; i<COLUMNS; ++i) {
 		for(unsigned j=0; j<ROWS; ++j) {
 		
-			//check rows
-			if(i<COLUMNS-3 && 
-				board[i][j].get_color()!=Tile::EMPTY && 
-				board[i][j]==board[i+1][j] && 
-				board[i+1][j]==board[i+2][j] && 
-				board[i+2][j]==board[i+3][j]) {
-				return true;
+			if(i<COLUMNS-3) {
+				if(board[i][j].get_color()!=Tile::EMPTY && 
+					board[i][j]==board[i+1][j] && 
+					board[i+1][j]==board[i+2][j] && 
+					board[i+2][j]==board[i+3][j]) {
+					return true;
+				}
+				
+				//check downward diagonal
+				if(j<ROWS-3 &&
+					board[i][j].get_color()!=Tile::EMPTY &&
+					board[i][j]==board[i+1][j+1] &&
+					board[i+1][j+1]==board[i+2][j+2] &&
+					board[i+2][j+2]==board[i+3][j+3]) {
+						return true;
+					}
+				
 			}
 			
 			//check columns
