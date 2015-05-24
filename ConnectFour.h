@@ -42,6 +42,8 @@ class ConnectFour
 		
 		void drop_token(int column);
 		
+		Tile::value current = Tile::RED; //red goes first
+		
 		//loads a surface at path, sets colorkey, creates texture from surface and returns it
 		SDL_Texture* load_texture_with_transparency(const char* path);
 };

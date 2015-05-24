@@ -133,7 +133,8 @@ void ConnectFour::drop_token(int column) {
 	
 	for(int i = ROWS-1; i >= 0; --i) {
 		if(board[column][i].is_empty()) {
-			board[column][i].set_color(Tile::RED);
+			board[column][i].set_color(current);
+			current = Tile::opposite(current);
 			return;
 		}
 	}
@@ -144,7 +145,7 @@ bool ConnectFour::is_won() const {
 		for(unsigned j=0; j<ROWS; ++j) {
 		
 			//skip lines starting with an empty tile
-			if(board[i][j].get_color()==Tile::EMPTY) {
+			if(board[i][j].get_color()!=current) {
 				continue;
 			}
 		
@@ -186,3 +187,4 @@ bool ConnectFour::is_won() const {
 	//exhausted all possibilities
 	return false;
 }
+

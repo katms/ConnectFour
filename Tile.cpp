@@ -60,6 +60,17 @@ void Tile::set_color(value new_color) {
 	}
 }
 
+Tile::value Tile::opposite(value color) {
+	switch(color) {
+		case RED:
+			return BLACK;
+		case BLACK:
+			return RED;
+		default:
+			return EMPTY;
+	}
+}
+
 bool Tile::operator==(const Tile& other) const {
 	return (color == other.color);
 }

@@ -13,6 +13,9 @@ class Tile
 		value get_color() const;
 		void set_color(value new_color);
 		
+		static value opposite(value color);
+
+		
 		bool operator==(const Tile& other) const;
 		
 		//set class texture (once) after setting up SDL,
