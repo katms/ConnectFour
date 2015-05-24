@@ -116,7 +116,12 @@ void ConnectFour::draw() {
 			break;
 	}
 	
-	cursor.x = mouse.x - Tile::TILE_LENGTH/2;
+	const int new_x = mouse.x - Tile::TILE_LENGTH/2;
+	
+	if(-Tile::BORDER_LENGTH < new_x && new_x + cursor.w < WIDTH+Tile::BORDER_LENGTH) {
+		cursor.x = new_x;
+	}
+		
 	SDL_RenderCopy(renderer, cursor_tx, NULL, &cursor);
 }
 

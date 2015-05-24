@@ -25,6 +25,7 @@ class Tile
 		void draw();
 	
 		static const int TILE_LENGTH = 75;
+		static const int BORDER_LENGTH = TILE_LENGTH/2 - 20; //whitespace length
 		
 	private:
 		SDL_Rect rect;
