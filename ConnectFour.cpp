@@ -116,13 +116,15 @@ void ConnectFour::draw() {
 			break;
 	}
 	
-	const int new_x = mouse.x - Tile::TILE_LENGTH/2;
+	if(!gameover) {
+		const int new_x = mouse.x - Tile::TILE_LENGTH/2;
 	
-	if(-Tile::BORDER_LENGTH < new_x && new_x + cursor.w < WIDTH+Tile::BORDER_LENGTH) {
-		cursor.x = new_x;
-	}
+		if(-Tile::BORDER_LENGTH < new_x && new_x + cursor.w < WIDTH+Tile::BORDER_LENGTH) {
+			cursor.x = new_x;
+		}
 		
-	SDL_RenderCopy(renderer, cursor_tx, NULL, &cursor);
+		SDL_RenderCopy(renderer, cursor_tx, NULL, &cursor);
+	}
 }
 
 void ConnectFour::handle_input() {
