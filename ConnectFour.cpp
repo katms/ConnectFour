@@ -45,6 +45,9 @@ ConnectFour::ConnectFour() {
 	}
 	
 	Tile::setup(renderer, tile, red, black);
+	
+	cursor.y = 0;
+	cursor.w = cursor.h = Tile::TILE_LENGTH;
 }
 
 ConnectFour::~ConnectFour() {
@@ -103,6 +106,18 @@ void ConnectFour::draw() {
 			board[i][j].draw();
 		}
 	}
+	
+	switch(current) {
+		case Tile::RED:
+			cursor_tx = red;
+			break;
+		case Tile::BLACK:
+			cursor_tx = black;
+			break;
+	}
+	
+	cursor.x = mouse.x - Tile::TILE_LENGTH/2;
+	SDL_RenderCopy(renderer, cursor_tx, NULL, &cursor);
 }
 
 void ConnectFour::handle_input() {

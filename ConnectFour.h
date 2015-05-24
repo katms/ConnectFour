@@ -46,6 +46,10 @@ class ConnectFour
 		
 		Tile::value current = Tile::RED; //red goes first
 		
+		//draw the currently playing token at the top of the board as the cursor moves
+		SDL_Rect cursor;
+		SDL_Texture *cursor_tx;
+		
 		//loads a surface at path, sets colorkey, creates texture from surface and returns it
 		SDL_Texture* load_texture_with_transparency(const char* path);
 };
