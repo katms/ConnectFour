@@ -113,7 +113,7 @@ void ConnectFour::handle_input() {
 		case SDL_MOUSEBUTTONDOWN:
 			if(SDL_BUTTON_LEFT == event.button.button && !wait_mouse) {
 				if(!gameover) {	
-					int column_clicked = mouse.x/TILE_LENGTH;
+					int column_clicked = mouse.x/Tile::TILE_LENGTH;
 						if(board[column_clicked][0].is_empty()) {
 							drop_token(column_clicked);
 							wait_mouse = true;

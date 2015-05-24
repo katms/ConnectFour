@@ -29,15 +29,14 @@ class ConnectFour
 		bool gameover = false;
 		
 		//leave a space at the top
-		const unsigned HEIGHT = (1+ROWS)*TILE_LENGTH;
-		const unsigned WIDTH = COLUMNS*TILE_LENGTH;
+		const unsigned HEIGHT = (1+ROWS)*Tile::TILE_LENGTH;
+		const unsigned WIDTH = COLUMNS*Tile::TILE_LENGTH;
 		
 		static const unsigned ROWS = 6;
 		static const unsigned COLUMNS = 7;
 		
 		Tile board[COLUMNS][ROWS];
 		SDL_Texture *tile;
-		static const int TILE_LENGTH = 75;
 		SDL_Texture *red;
 		SDL_Texture *black;
 		
