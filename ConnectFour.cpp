@@ -134,6 +134,12 @@ void ConnectFour::update() {
 		printf("You win!\n");
 		gameover = true;
 	}
+	
+	else if(is_lost()) {
+		printf("No more possible moves\n");
+		gameover = true;
+	}
+	
 	else { //next turn
 		current = Tile::opposite(current);
 	}
@@ -195,5 +201,15 @@ bool ConnectFour::is_won() const {
 	
 	//exhausted all possibilities
 	return false;
+}
+
+bool ConnectFour::is_lost() const {
+	//check for at least one empty column
+	for(unsigned i=0; i<COLUMNS; ++i) {
+		if(board[i][0].get_color()==Tile::EMPTY) {
+			return false;
+		}
+	}
+	return true;
 }
 

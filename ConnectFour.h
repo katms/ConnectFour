@@ -25,6 +25,7 @@ class ConnectFour
 		void handle_input();
 		
 		bool is_won() const;
+		bool is_lost() const;
 		bool gameover = false;
 		
 		//leave a space at the top
