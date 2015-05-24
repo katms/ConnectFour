@@ -116,8 +116,10 @@ void ConnectFour::handle_input() {
 		case SDL_MOUSEBUTTONDOWN:
 			if(SDL_BUTTON_LEFT == event.button.button && !wait_mouse) {
 				int column_clicked = mouse.x/TILE_LENGTH;
-				drop_token(column_clicked);
-				wait_mouse = true;
+					if(board[column_clicked][0].is_empty()) {
+						drop_token(column_clicked);
+						wait_mouse = true;
+					}
 			}
 			break;
 		case SDL_MOUSEBUTTONUP:
@@ -127,10 +129,7 @@ void ConnectFour::handle_input() {
 }
 
 void ConnectFour::drop_token(int column) {
-	if(!board[column][0].is_empty()) {
-		return;
-	}
-	
+	//assume at least one empty space
 	for(int i = ROWS-1; i >= 0; --i) {
 		if(board[column][i].is_empty()) {
 			board[column][i].set_color(current);
