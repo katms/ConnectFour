@@ -91,10 +91,7 @@ void ConnectFour::game_loop() {
 		
 		handle_input();
 		
-		if(!printed_msg && is_won()) {
-			printf("You win!\n");
-			printed_msg = true;
-		}
+		
 	
 		SDL_RenderPresent(renderer);
 	}
@@ -115,11 +112,14 @@ void ConnectFour::handle_input() {
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if(SDL_BUTTON_LEFT == event.button.button && !wait_mouse) {
-				int column_clicked = mouse.x/TILE_LENGTH;
-					if(board[column_clicked][0].is_empty()) {
-						drop_token(column_clicked);
-						wait_mouse = true;
-					}
+				if(!gameover) {	
+					int column_clicked = mouse.x/TILE_LENGTH;
+						if(board[column_clicked][0].is_empty()) {
+							drop_token(column_clicked);
+							wait_mouse = true;
+							update();
+						}
+				}
 			}
 			break;
 		case SDL_MOUSEBUTTONUP:
@@ -128,12 +128,22 @@ void ConnectFour::handle_input() {
 	}
 }
 
+void ConnectFour::update() {
+	//check if the last move won the game
+	if(is_won()) {
+		printf("You win!\n");
+		gameover = true;
+	}
+	else { //next turn
+		current = Tile::opposite(current);
+	}
+}
+
 void ConnectFour::drop_token(int column) {
 	//assume at least one empty space
 	for(int i = ROWS-1; i >= 0; --i) {
 		if(board[column][i].is_empty()) {
 			board[column][i].set_color(current);
-			current = Tile::opposite(current);
 			return;
 		}
 	}
