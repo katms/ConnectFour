@@ -135,7 +135,7 @@ void ConnectFour::handle_input() {
 						if(board[column_clicked][0].is_empty()) {
 							drop_token(column_clicked);
 							wait_mouse = true;
-							update();
+							update_game_state();
 						}
 				}
 			}
@@ -146,7 +146,7 @@ void ConnectFour::handle_input() {
 	}
 }
 
-void ConnectFour::update() {
+void ConnectFour::update_game_state() {
 	//check if the last move won the game
 	if(is_won()) {
 		printf("You win!\n");

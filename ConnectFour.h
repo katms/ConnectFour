@@ -43,7 +43,7 @@ class ConnectFour
 		
 		void drop_token(int column);
 		//checks for and handles endgame, switches players
-		void update();
+		void update_game_state();
 		
 		Tile::value current = Tile::RED; //red goes first
 		
