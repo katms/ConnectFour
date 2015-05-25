@@ -94,7 +94,7 @@ void ConnectFour::game_loop() {
 		
 		handle_input();
 		
-		
+		update();
 	
 		SDL_RenderPresent(renderer);
 	}
@@ -147,7 +147,9 @@ void ConnectFour::handle_input() {
 }
 
 void ConnectFour::update() {
-
+	for(auto& f: falling) {
+		f.update();
+	}
 }
 
 void ConnectFour::update_game_state() {

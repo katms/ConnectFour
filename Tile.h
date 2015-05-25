@@ -45,6 +45,22 @@ class Tile
 			SDL_Rect location;
 			Tile& goal;
 			value& color = goal.color;
+			
+			bool is_done() const {
+				return location.y >= goal.rect.y; 
+			}
+			
+			void update() {
+				int next = location.y + DISTANCE;
+				if(next >= goal.rect.y) {
+					location.y = goal.rect.y;
+				}
+				else {
+					location.y = next;
+				}
+			}
+			
+			static const int DISTANCE = 5;
 		};
 		
 	private:
