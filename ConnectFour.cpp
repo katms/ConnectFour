@@ -146,6 +146,10 @@ void ConnectFour::handle_input() {
 	}
 }
 
+void ConnectFour::update() {
+
+}
+
 void ConnectFour::update_game_state() {
 	//check if the last move won the game
 	if(is_won()) {

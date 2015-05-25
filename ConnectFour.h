@@ -24,6 +24,7 @@ class ConnectFour
 		
 		void draw();
 		void handle_input();
+		void update();
 		
 		bool is_won() const;
 		bool is_lost() const;
