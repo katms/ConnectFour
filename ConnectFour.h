@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include "Tile.h"
+#include <list>
 
 class ConnectFour
 {
@@ -52,4 +53,6 @@ class ConnectFour
 		
 		//loads a surface at path, sets colorkey, creates texture from surface and returns it
 		SDL_Texture* load_texture_with_transparency(const char* path);
+		
+		std::list<Tile::Falling> falling;
 };

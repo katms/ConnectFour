@@ -30,6 +30,23 @@ class Tile
 		
 		static SDL_Texture* get_img(value v);
 		
+		
+		//draw the token falling between the top and the goal
+		struct Falling
+		{
+			Falling(Tile& t):
+				goal(t)
+			{
+				location.x = t.rect.x;
+				location.y = 0;
+				location.h = location.w = Tile::TILE_LENGTH;
+			}
+			
+			SDL_Rect location;
+			Tile& goal;
+			value& color = goal.color;
+		};
+		
 	private:
 		SDL_Rect rect;
 		value color = EMPTY;

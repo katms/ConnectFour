@@ -101,6 +101,11 @@ void ConnectFour::game_loop() {
 }
 
 void ConnectFour::draw() {
+	for(const auto& f : falling) {
+		SDL_RenderCopy(renderer, Tile::get_img(f.color), NULL, &(f.location));
+	}
+
+
 	for(unsigned i=0; i<COLUMNS; ++i) {
 		for(unsigned j=0; j<ROWS; ++j) {
 			board[i][j].draw();
@@ -163,6 +168,7 @@ void ConnectFour::drop_token(int column) {
 	for(int i = ROWS-1; i >= 0; --i) {
 		if(board[column][i].is_empty()) {
 			board[column][i].set_color(current);
+			falling.push_back(Tile::Falling(board[column][i]));
 			return;
 		}
 	}
