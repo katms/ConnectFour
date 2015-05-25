@@ -107,15 +107,6 @@ void ConnectFour::draw() {
 		}
 	}
 	
-	switch(current) {
-		case Tile::RED:
-			cursor_tx = red;
-			break;
-		case Tile::BLACK:
-			cursor_tx = black;
-			break;
-	}
-	
 	if(!gameover) {
 		const int new_x = mouse.x - Tile::TILE_LENGTH/2;
 	
@@ -123,7 +114,7 @@ void ConnectFour::draw() {
 			cursor.x = new_x;
 		}
 		
-		SDL_RenderCopy(renderer, cursor_tx, NULL, &cursor);
+		SDL_RenderCopy(renderer, Tile::get_img(current), NULL, &cursor);
 	}
 }
 

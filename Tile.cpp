@@ -16,10 +16,8 @@ Tile::Tile(int x, int y) {
 void Tile::draw() {
 	switch(color) {
 		case RED:
-			SDL_RenderCopy(renderer, red, NULL, &rect);
-			break;
 		case BLACK:
-			SDL_RenderCopy(renderer, black, NULL, &rect);
+			SDL_RenderCopy(renderer, get_img(color), NULL, &rect);
 			break;
 		case EMPTY:
 			//do nothing
@@ -73,4 +71,15 @@ Tile::value Tile::opposite(value color) {
 
 bool Tile::operator==(const Tile& other) const {
 	return (color == other.color);
+}
+
+SDL_Texture* Tile::get_img(value v) {
+	switch(v) {
+		case RED:
+			return red;
+		case BLACK:
+			return black;
+		case EMPTY:
+			return texture;
+	}
 }

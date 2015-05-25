@@ -27,6 +27,9 @@ class Tile
 		static const int TILE_LENGTH = 75;
 		static const int BORDER_LENGTH = TILE_LENGTH/2 - 20; //whitespace length
 		
+		
+		static SDL_Texture* get_img(value v);
+		
 	private:
 		SDL_Rect rect;
 		value color = EMPTY;
