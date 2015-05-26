@@ -105,17 +105,20 @@ void ConnectFour::game_loop() {
 }
 
 void ConnectFour::draw() {
+
+	//draw falling tokens under the board
 	for(const auto& f : falling) {
 		SDL_RenderCopy(renderer, Tile::get_img(f.color), NULL, &(f.location));
 	}
 
-
+	//draw board
 	for(unsigned i=0; i<COLUMNS; ++i) {
 		for(unsigned j=0; j<ROWS; ++j) {
 			board[i][j].draw();
 		}
 	}
 	
+	//draw player
 	if(!gameover) {
 		const int new_x = mouse.x - Tile::TILE_LENGTH/2;
 	
@@ -153,6 +156,11 @@ void ConnectFour::handle_input() {
 void ConnectFour::update() {
 	for(auto& f: falling) {
 		f.update();
+	}
+	
+	//remove tokens that reached the goal
+	while(!falling.empty() && falling.front().is_done()) {
+		falling.pop_front();
 	}
 }
 

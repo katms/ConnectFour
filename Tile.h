@@ -54,6 +54,7 @@ class Tile
 				int next = location.y + DISTANCE;
 				if(next >= goal.rect.y) {
 					location.y = goal.rect.y;
+					goal.waiting = false;
 				}
 				else {
 					location.y = next;
@@ -66,6 +67,10 @@ class Tile
 	private:
 		SDL_Rect rect;
 		value color = EMPTY;
+		
+		//when Falling reaches rect.y, set to false so Tile will draw its own color
+		//otherwise it's empty and waiting doesn't matter so default to true
+		bool waiting = true; 
 		
 		
 		static SDL_Texture *texture;
