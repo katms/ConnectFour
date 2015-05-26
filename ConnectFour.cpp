@@ -85,7 +85,7 @@ SDL_Texture* ConnectFour::load_texture_with_transparency(const char* path) {
 
 void ConnectFour::game_loop() {
 	
-	while(running) {
+	while(running && SDL_QUIT != event.type) {
 		SDL_PollEvent(&event);
 		SDL_GetMouseState(&mouse.x, &mouse.y);
 
