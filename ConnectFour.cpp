@@ -48,6 +48,8 @@ ConnectFour::ConnectFour() {
 	
 	cursor.y = 0;
 	cursor.w = cursor.h = Tile::TILE_LENGTH;
+	
+	ticks = SDL_GetTicks();
 }
 
 ConnectFour::~ConnectFour() {
@@ -92,9 +94,11 @@ void ConnectFour::game_loop() {
 		
 		draw();
 		
-		handle_input();
-		
-		update();
+		if(ticks + DELAY < SDL_GetTicks()) {
+			handle_input();
+			update();
+			ticks = SDL_GetTicks();
+		}
 	
 		SDL_RenderPresent(renderer);
 	}

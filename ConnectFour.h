@@ -22,6 +22,9 @@ class ConnectFour
 		//waiting for X milliseconds wasn't working out
 		bool wait_mouse = false;
 		
+		unsigned ticks;
+		static const unsigned DELAY = 20;
+		
 		void draw();
 		void handle_input();
 		void update();
