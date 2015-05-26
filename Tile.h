@@ -42,6 +42,8 @@ class Tile
 				location.h = location.w = Tile::TILE_LENGTH;
 			}
 			
+			~Falling() { skip(); }
+			
 			SDL_Rect location;
 			Tile& goal;
 			value& color = goal.color;
@@ -59,6 +61,11 @@ class Tile
 				else {
 					location.y = next;
 				}
+			}
+			
+			void skip() {
+				location.y = goal.rect.y;
+				goal.waiting = false;
 			}
 			
 			static const int DISTANCE = 5;
