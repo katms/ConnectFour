@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include "Tile.h"
+#include <array>
 
 class ConnectFour
 {
@@ -21,8 +22,12 @@ class ConnectFour
 		//waiting for X milliseconds wasn't working out
 		bool wait_mouse = false;
 		
+		unsigned ticks;
+		static const unsigned DELAY = 20;
+		
 		void draw();
 		void handle_input();
+		void update();
 		
 		bool is_won() const;
 		bool is_lost() const;
@@ -42,7 +47,7 @@ class ConnectFour
 		
 		void drop_token(int column);
 		//checks for and handles endgame, switches players
-		void update();
+		void update_game_state();
 		
 		Tile::value current = Tile::RED; //red goes first
 		
@@ -52,4 +57,8 @@ class ConnectFour
 		
 		//loads a surface at path, sets colorkey, creates texture from surface and returns it
 		SDL_Texture* load_texture_with_transparency(const char* path);
+		
+		//only one animation per column
+		//if falling[c] is null, c has none
+		std::array<Tile::Falling*, COLUMNS> falling;
 };

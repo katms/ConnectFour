@@ -48,9 +48,20 @@ ConnectFour::ConnectFour() {
 	
 	cursor.y = 0;
 	cursor.w = cursor.h = Tile::TILE_LENGTH;
+	
+	falling.fill(nullptr);
+	
+	ticks = SDL_GetTicks();
 }
 
 ConnectFour::~ConnectFour() {
+
+	for(auto& f: falling) {
+		if(f) {
+			delete f;
+		}
+	}
+
 	SDL_DestroyTexture(red);
 	SDL_DestroyTexture(black);
 	SDL_DestroyTexture(tile);
@@ -83,7 +94,7 @@ SDL_Texture* ConnectFour::load_texture_with_transparency(const char* path) {
 
 void ConnectFour::game_loop() {
 	
-	while(running) {
+	while(running && SDL_QUIT != event.type) {
 		SDL_PollEvent(&event);
 		SDL_GetMouseState(&mouse.x, &mouse.y);
 
@@ -92,21 +103,34 @@ void ConnectFour::game_loop() {
 		
 		draw();
 		
-		handle_input();
-		
-		
+		if(ticks + DELAY < SDL_GetTicks()) {
+			handle_input();
+			update();
+			ticks = SDL_GetTicks();
+		}
+	
 	
 		SDL_RenderPresent(renderer);
 	}
 }
 
 void ConnectFour::draw() {
+
+	//draw falling tokens under the board
+	for(const auto& f : falling) {
+		if(f) {
+			SDL_RenderCopy(renderer, Tile::get_img(f->color), NULL, &(f->location));
+		}
+	}
+
+	//draw board
 	for(unsigned i=0; i<COLUMNS; ++i) {
 		for(unsigned j=0; j<ROWS; ++j) {
 			board[i][j].draw();
 		}
 	}
 	
+	//draw player
 	if(!gameover) {
 		const int new_x = mouse.x - Tile::TILE_LENGTH/2;
 	
@@ -130,7 +154,7 @@ void ConnectFour::handle_input() {
 						if(board[column_clicked][0].is_empty()) {
 							drop_token(column_clicked);
 							wait_mouse = true;
-							update();
+							update_game_state();
 						}
 				}
 			}
@@ -142,6 +166,20 @@ void ConnectFour::handle_input() {
 }
 
 void ConnectFour::update() {
+	for(auto& f: falling) {
+		if(f) {
+			f->update();
+			
+			//remove tokens that reached the goal
+			if(f->is_done()) {
+				delete f;
+				f = nullptr;
+			}
+		}
+	}
+}
+
+void ConnectFour::update_game_state() {
 	//check if the last move won the game
 	if(is_won()) {
 		printf("You win!\n");
@@ -163,6 +201,20 @@ void ConnectFour::drop_token(int column) {
 	for(int i = ROWS-1; i >= 0; --i) {
 		if(board[column][i].is_empty()) {
 			board[column][i].set_color(current);
+			
+			auto& ptr = falling[column];
+			
+			/* cancel animations in the same column 
+			   so that if one column is quickly filled,
+			   the top won't stop at its goal
+			   while the first one is still falling through empty space
+			*/
+			if(ptr) {
+				delete ptr;
+				ptr = nullptr;
+			}
+			ptr = new Tile::Falling(board[column][i]);
+			
 			return;
 		}
 	}

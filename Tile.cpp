@@ -17,7 +17,9 @@ void Tile::draw() {
 	switch(color) {
 		case RED:
 		case BLACK:
-			SDL_RenderCopy(renderer, get_img(color), NULL, &rect);
+			if(!waiting) {
+				SDL_RenderCopy(renderer, get_img(color), NULL, &rect);
+			}
 			break;
 		case EMPTY:
 			//do nothing
