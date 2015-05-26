@@ -49,10 +49,19 @@ ConnectFour::ConnectFour() {
 	cursor.y = 0;
 	cursor.w = cursor.h = Tile::TILE_LENGTH;
 	
+	falling.fill(nullptr);
+	
 	ticks = SDL_GetTicks();
 }
 
 ConnectFour::~ConnectFour() {
+
+	for(auto& f: falling) {
+		if(f) {
+			delete f;
+		}
+	}
+
 	SDL_DestroyTexture(red);
 	SDL_DestroyTexture(black);
 	SDL_DestroyTexture(tile);
@@ -100,6 +109,7 @@ void ConnectFour::game_loop() {
 			ticks = SDL_GetTicks();
 		}
 	
+	
 		SDL_RenderPresent(renderer);
 	}
 }
@@ -108,7 +118,9 @@ void ConnectFour::draw() {
 
 	//draw falling tokens under the board
 	for(const auto& f : falling) {
-		SDL_RenderCopy(renderer, Tile::get_img(f.color), NULL, &(f.location));
+		if(f) {
+			SDL_RenderCopy(renderer, Tile::get_img(f->color), NULL, &(f->location));
+		}
 	}
 
 	//draw board
@@ -155,12 +167,15 @@ void ConnectFour::handle_input() {
 
 void ConnectFour::update() {
 	for(auto& f: falling) {
-		f.update();
-	}
-	
-	//remove tokens that reached the goal
-	while(!falling.empty() && falling.front().is_done()) {
-		falling.pop_front();
+		if(f) {
+			f->update();
+			
+			//remove tokens that reached the goal
+			if(f->is_done()) {
+				delete f;
+				f = nullptr;
+			}
+		}
 	}
 }
 
@@ -186,7 +201,20 @@ void ConnectFour::drop_token(int column) {
 	for(int i = ROWS-1; i >= 0; --i) {
 		if(board[column][i].is_empty()) {
 			board[column][i].set_color(current);
-			falling.push_back(Tile::Falling(board[column][i]));
+			
+			auto& ptr = falling[column];
+			
+			/* cancel animations in the same column 
+			   so that if one column is quickly filled,
+			   the top won't stop at its goal
+			   while the first one is still falling through empty space
+			*/
+			if(ptr) {
+				delete ptr;
+				ptr = nullptr;
+			}
+			ptr = new Tile::Falling(board[column][i]);
+			
 			return;
 		}
 	}
