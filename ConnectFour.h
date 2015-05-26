@@ -29,8 +29,8 @@ class ConnectFour
 		bool gameover = false;
 		
 		//leave a space at the top
-		const unsigned HEIGHT = (1+ROWS)*Tile::TILE_LENGTH;
-		const unsigned WIDTH = COLUMNS*Tile::TILE_LENGTH;
+		const int HEIGHT = (1+ROWS)*Tile::TILE_LENGTH;
+		const int WIDTH = COLUMNS*Tile::TILE_LENGTH;
 		
 		static const unsigned ROWS = 6;
 		static const unsigned COLUMNS = 7;

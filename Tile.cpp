@@ -79,7 +79,7 @@ SDL_Texture* Tile::get_img(value v) {
 			return red;
 		case BLACK:
 			return black;
-		case EMPTY:
+		default: //EMPTY
 			return texture;
 	}
 }
