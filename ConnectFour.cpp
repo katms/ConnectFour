@@ -52,10 +52,7 @@ ConnectFour::ConnectFour() {
 	
 	falling.fill(nullptr);
 	
-	state = PLAYING;
-	
-	human = Tile::RED;
-	computer = Tile::opposite(human);
+	state = CHOOSE;
 	
 	current = human;
 	
@@ -124,29 +121,54 @@ void ConnectFour::game_loop() {
 
 void ConnectFour::draw() {
 
-	//draw falling tokens under the board
-	for(const auto& f : falling) {
-		if(f) {
-			SDL_RenderCopy(renderer, Tile::get_img(f->color), NULL, &(f->location));
-		}
-	}
-
-	//draw board
-	for(unsigned i=0; i<COLUMNS; ++i) {
-		for(unsigned j=0; j<ROWS; ++j) {
-			board[i][j].draw();
-		}
-	}
-	
-	//draw player
-	if(PLAYING == state && current == human) {
-		const int new_x = mouse.x - Tile::TILE_LENGTH/2;
-	
-		if(-Tile::BORDER_LENGTH < new_x && new_x + cursor.w < WIDTH+Tile::BORDER_LENGTH) {
-			cursor.x = new_x;
-		}
+	switch(state) {
+		case CHOOSE:
+			//split the window
+			SDL_Rect right, left;
+			right.y = left.y = 0;
+			right.h = left.h = HEIGHT;
+			right.x = 0;
+			
+			//fill all space
+			right.w = left.w = WIDTH/2;
+			left.w += WIDTH%2;
+			left.x = WIDTH - right.w - 1;
+			
+			//draw right/red and left/black halves
+			SDL_SetRenderDrawColor(renderer, 0xFF, 0x0B, 0x0B, 0xFF);
+			SDL_RenderFillRect(renderer, &right);
+			
+			SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
+			SDL_RenderFillRect(renderer, &left);
+			break;
 		
-		SDL_RenderCopy(renderer, Tile::get_img(human), NULL, &cursor);
+		case PLAYING:
+		case GAMEOVER:
+			//draw falling tokens under the board
+			for(const auto& f : falling) {
+				if(f) {
+					SDL_RenderCopy(renderer, Tile::get_img(f->color), NULL, &(f->location));
+				}
+			}
+
+			//draw board
+			for(unsigned i=0; i<COLUMNS; ++i) {
+				for(unsigned j=0; j<ROWS; ++j) {
+					board[i][j].draw();
+				}
+			}
+	
+			//draw player
+			if(PLAYING == state && current == human) {
+				const int new_x = mouse.x - Tile::TILE_LENGTH/2;
+	
+				if(-Tile::BORDER_LENGTH < new_x && new_x + cursor.w < WIDTH+Tile::BORDER_LENGTH) {
+					cursor.x = new_x;
+				}
+		
+				SDL_RenderCopy(renderer, Tile::get_img(human), NULL, &cursor);
+			}
+			break;
 	}
 }
 
@@ -157,12 +179,26 @@ void ConnectFour::handle_input() {
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if(SDL_BUTTON_LEFT == event.button.button && !wait_mouse) {
-				if(PLAYING == state && human == current) {	
-					int column_clicked = mouse.x/Tile::TILE_LENGTH;
-						if(board[column_clicked][0].is_empty()) {
-							drop_token(column_clicked);
-							wait_mouse = true;
+				switch(state) {
+					case CHOOSE:
+						if(mouse.x < WIDTH/2)	human = Tile::RED;
+						else 					human = Tile::BLACK;
+						computer = Tile::opposite(human);
+						current = human;
+						state = PLAYING;
+						wait_mouse = true;
+						break;
+					case PLAYING:
+						if(human == current) {	
+							int column_clicked = mouse.x/Tile::TILE_LENGTH;
+							if(board[column_clicked][0].is_empty()) {
+								drop_token(column_clicked);
+								wait_mouse = true;
+							}
 						}
+						break;
+					default:
+						break;
 				}
 			}
 			break;
@@ -178,23 +214,30 @@ void ConnectFour::handle_input() {
 }
 
 void ConnectFour::update() {
-	for(auto& f: falling) {
-		if(f) {
-			f->update();
+	switch(state) {
+		case PLAYING:
+		case GAMEOVER:
+			for(auto& f: falling) {
+				if(f) {
+					f->update();
 			
-			//remove tokens that reached the goal
-			if(f->is_done()) {
-				delete f;
-				f = nullptr;
+					//remove tokens that reached the goal
+					if(f->is_done()) {
+						delete f;
+						f = nullptr;
+					}
+				}
 			}
-		}
-	}
 	
-	//choose a random available column
-	if(PLAYING == state && computer == current) {
-		int move = rand()%COLUMNS;
-		//if this fails, pick a random column in the next update
-		drop_token(move);
+			//choose a random available column
+			if(PLAYING == state && computer == current) {
+				int move = rand()%COLUMNS;
+				//if this fails, pick a random column in the next update
+				drop_token(move);
+			}
+			break;
+		default:
+			break;
 	}
 }
 
