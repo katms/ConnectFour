@@ -162,6 +162,11 @@ void ConnectFour::handle_input() {
 		case SDL_MOUSEBUTTONUP:
 			wait_mouse = false;
 			break;
+		case SDL_KEYDOWN:
+			for(auto& f : falling) {
+				if(f) f->skip();
+			}
+			break;
 	}
 }
 
