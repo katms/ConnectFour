@@ -49,7 +49,10 @@ class ConnectFour
 		//checks for and handles endgame, switches players
 		void update_game_state();
 		
-		Tile::value current = Tile::RED; //red goes first
+		Tile::value human;
+		Tile::value computer;
+		
+		Tile::value current;
 		
 		//draw the currently playing token at the top of the board as the cursor moves
 		SDL_Rect cursor;

@@ -51,6 +51,11 @@ ConnectFour::ConnectFour() {
 	
 	falling.fill(nullptr);
 	
+	human = Tile::RED;
+	computer = Tile::opposite(human);
+	
+	current = human;
+	
 	ticks = SDL_GetTicks();
 }
 
