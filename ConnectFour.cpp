@@ -137,14 +137,14 @@ void ConnectFour::draw() {
 	}
 	
 	//draw player
-	if(!gameover) {
+	if(!gameover && current == human) {
 		const int new_x = mouse.x - Tile::TILE_LENGTH/2;
 	
 		if(-Tile::BORDER_LENGTH < new_x && new_x + cursor.w < WIDTH+Tile::BORDER_LENGTH) {
 			cursor.x = new_x;
 		}
 		
-		SDL_RenderCopy(renderer, Tile::get_img(current), NULL, &cursor);
+		SDL_RenderCopy(renderer, Tile::get_img(human), NULL, &cursor);
 	}
 }
 
@@ -191,6 +191,7 @@ void ConnectFour::update() {
 	//choose a random available column
 	if(!gameover && computer == current) {
 		int move = rand()%COLUMNS;
+		//if this fails, pick a random column in the next update
 		drop_token(move);
 	}
 }
