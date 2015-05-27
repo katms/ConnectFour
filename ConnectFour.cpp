@@ -184,7 +184,12 @@ void ConnectFour::handle_input() {
 						if(mouse.x < WIDTH/2)	human = Tile::RED;
 						else 					human = Tile::BLACK;
 						computer = Tile::opposite(human);
-						current = human;
+						
+						//choose who goes first
+						if(rand()%2) current = human;
+						else current = computer;
+						
+						
 						state = PLAYING;
 						wait_mouse = true;
 						break;
