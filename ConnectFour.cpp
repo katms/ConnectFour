@@ -160,7 +160,6 @@ void ConnectFour::handle_input() {
 						if(board[column_clicked][0].is_empty()) {
 							drop_token(column_clicked);
 							wait_mouse = true;
-							update_game_state();
 						}
 				}
 			}
@@ -192,10 +191,7 @@ void ConnectFour::update() {
 	//choose a random available column
 	if(!gameover && computer == current) {
 		int move = rand()%COLUMNS;
-		if(board[move][0].is_empty()) {
-			drop_token(move);
-			update_game_state();
-		}
+		drop_token(move);
 	}
 }
 
@@ -220,7 +216,11 @@ void ConnectFour::update_game_state() {
 }
 
 void ConnectFour::drop_token(int column) {
-	//assume at least one empty space
+
+	if(!board[column][0].is_empty()) {
+		return;
+	}	
+
 	for(int i = ROWS-1; i >= 0; --i) {
 		if(board[column][i].is_empty()) {
 			board[column][i].set_color(current);
@@ -237,7 +237,7 @@ void ConnectFour::drop_token(int column) {
 				ptr = nullptr;
 			}
 			ptr = new Tile::Falling(board[column][i]);
-			
+			update_game_state();
 			return;
 		}
 	}
