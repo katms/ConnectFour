@@ -1,6 +1,7 @@
 #include "ConnectFour.h"
 #include <stdio.h>
 #include <SDL2/SDL_image.h>
+#include <cstdlib>
 
 ConnectFour::ConnectFour() {
 	running = true;
@@ -154,7 +155,7 @@ void ConnectFour::handle_input() {
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if(SDL_BUTTON_LEFT == event.button.button && !wait_mouse) {
-				if(!gameover) {	
+				if(!gameover && human == current) {	
 					int column_clicked = mouse.x/Tile::TILE_LENGTH;
 						if(board[column_clicked][0].is_empty()) {
 							drop_token(column_clicked);
@@ -187,12 +188,24 @@ void ConnectFour::update() {
 			}
 		}
 	}
+	
+	//choose a random available column
+	if(!gameover && computer == current) {
+		int move = rand()%COLUMNS;
+		if(board[move][0].is_empty()) {
+			drop_token(move);
+			update_game_state();
+		}
+	}
 }
 
 void ConnectFour::update_game_state() {
 	//check if the last move won the game
 	if(is_won()) {
-		printf("You win!\n");
+		if(human == current)
+			printf("You win!\n");
+		else
+			printf("You lose.\n");
 		gameover = true;
 	}
 	
