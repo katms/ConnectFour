@@ -31,7 +31,8 @@ class ConnectFour
 		
 		bool is_won() const;
 		bool is_lost() const;
-		bool gameover = false;
+		
+		enum {PLAYING, GAMEOVER} state;
 		
 		//leave a space at the top
 		const int HEIGHT = (1+ROWS)*Tile::TILE_LENGTH;

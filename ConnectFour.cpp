@@ -52,6 +52,8 @@ ConnectFour::ConnectFour() {
 	
 	falling.fill(nullptr);
 	
+	state = PLAYING;
+	
 	human = Tile::RED;
 	computer = Tile::opposite(human);
 	
@@ -137,7 +139,7 @@ void ConnectFour::draw() {
 	}
 	
 	//draw player
-	if(!gameover && current == human) {
+	if(PLAYING == state && current == human) {
 		const int new_x = mouse.x - Tile::TILE_LENGTH/2;
 	
 		if(-Tile::BORDER_LENGTH < new_x && new_x + cursor.w < WIDTH+Tile::BORDER_LENGTH) {
@@ -155,7 +157,7 @@ void ConnectFour::handle_input() {
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if(SDL_BUTTON_LEFT == event.button.button && !wait_mouse) {
-				if(!gameover && human == current) {	
+				if(PLAYING == state && human == current) {	
 					int column_clicked = mouse.x/Tile::TILE_LENGTH;
 						if(board[column_clicked][0].is_empty()) {
 							drop_token(column_clicked);
@@ -189,7 +191,7 @@ void ConnectFour::update() {
 	}
 	
 	//choose a random available column
-	if(!gameover && computer == current) {
+	if(PLAYING == state && computer == current) {
 		int move = rand()%COLUMNS;
 		//if this fails, pick a random column in the next update
 		drop_token(move);
@@ -203,12 +205,12 @@ void ConnectFour::update_game_state() {
 			printf("You win!\n");
 		else
 			printf("You lose.\n");
-		gameover = true;
+		state = GAMEOVER;
 	}
 	
 	else if(is_lost()) {
 		printf("No more possible moves\n");
-		gameover = true;
+		state = GAMEOVER;
 	}
 	
 	else { //next turn
