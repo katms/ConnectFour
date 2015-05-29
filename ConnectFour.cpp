@@ -236,9 +236,11 @@ void ConnectFour::update() {
 	
 			//choose a random available column
 			if(PLAYING == state && computer == current) {
-				int move = rand()%COLUMNS;
-				//if this fails, pick a random column in the next update
-				drop_token(move);
+				//an only be in state PLAYING if there is at least one possible move
+				//start at a random column and iterate until one is found
+				int move;
+				for(move=rand(); !board[move%7][0].is_empty(); ++move);
+				drop_token(move%7);
 			}
 			break;
 		default:
