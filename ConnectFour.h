@@ -53,6 +53,9 @@ class ConnectFour
 		//chooses and plays a column on the computer's turn
 		void calculate_move();
 		
+		//checks if playing val on col would win
+		bool could_win_on(const int col, const Tile::value val) const;
+		
 		Tile::value human;
 		Tile::value computer;
 		

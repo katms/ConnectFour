@@ -352,10 +352,45 @@ bool ConnectFour::is_lost() const {
 
 
 void ConnectFour::calculate_move() {
-	//choose a random available column: start at a random column and iterate until one is found
+	for(unsigned i=0; i<COLUMNS; ++i) {
+		if(could_win_on(i, computer)) {
+			drop_token(i);
+			return;
+		}
+	}
+	
+	
+	//otherwise choose a random available column:
+	//start at a random column and iterate until one is found
 	int move;
 	for(move=rand(); !board[move%7][0].is_empty(); ++move);
 	
-	
 	drop_token(move%7);
+	
 }
+
+//returns true if playing val on column col would win the game
+bool ConnectFour::could_win_on(const int col, const Tile::value val) const {
+
+	//make sure this is a legal move
+	if(!board[col][0].is_empty()) {
+		return false;
+	}
+
+	//find the next empty slot
+	int i;
+	for(i=ROWS-1; i>=0 && !board[col][i].is_empty(); --i);// printf("i = %d\n", i);
+	const int row = i;
+
+	
+	//check column
+	int count = 0;
+	for(int c = row+1; c <= std::min(static_cast<int>(ROWS-1), row+3); ++c) {
+		if(board[col][c].get_color()==val) {
+			++count;
+		}
+	}
+	return (count==3);
+	
+}
+
