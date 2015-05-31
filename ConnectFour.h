@@ -50,6 +50,9 @@ class ConnectFour
 		//checks for and handles endgame, switches players
 		void update_game_state();
 		
+		//chooses and plays a column on the computer's turn
+		void calculate_move();
+		
 		Tile::value human;
 		Tile::value computer;
 		

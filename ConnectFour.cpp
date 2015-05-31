@@ -233,14 +233,10 @@ void ConnectFour::update() {
 					}
 				}
 			}
-	
-			//choose a random available column
+			
+			//can only be in state PLAYING if there is at least one possible move
 			if(PLAYING == state && computer == current) {
-				//an only be in state PLAYING if there is at least one possible move
-				//start at a random column and iterate until one is found
-				int move;
-				for(move=rand(); !board[move%7][0].is_empty(); ++move);
-				drop_token(move%7);
+				calculate_move();
 			}
 			break;
 		default:
@@ -354,3 +350,12 @@ bool ConnectFour::is_lost() const {
 	return true;
 }
 
+
+void ConnectFour::calculate_move() {
+	//choose a random available column: start at a random column and iterate until one is found
+	int move;
+	for(move=rand(); !board[move%7][0].is_empty(); ++move);
+	
+	
+	drop_token(move%7);
+}
