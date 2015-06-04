@@ -143,6 +143,17 @@ void ConnectFour::draw() {
 			break;
 		
 		case PLAYING:
+			//draw player
+			if(current == human) {
+				const int new_x = mouse.x - Tile::TILE_LENGTH/2;
+	
+				if(-Tile::BORDER_LENGTH < new_x && new_x + cursor.w < WIDTH+Tile::BORDER_LENGTH) {
+					cursor.x = new_x;
+				}
+		
+				SDL_RenderCopy(renderer, Tile::get_img(human), NULL, &cursor);
+			}
+			//draw board for both PLAYING and GAMEOVER
 		case GAMEOVER:
 			//draw falling tokens under the board
 			for(const auto& f : falling) {
@@ -156,18 +167,7 @@ void ConnectFour::draw() {
 				for(unsigned j=0; j<ROWS; ++j) {
 					board[i][j].draw();
 				}
-			}
-	
-			//draw player
-			if(PLAYING == state && current == human) {
-				const int new_x = mouse.x - Tile::TILE_LENGTH/2;
-	
-				if(-Tile::BORDER_LENGTH < new_x && new_x + cursor.w < WIDTH+Tile::BORDER_LENGTH) {
-					cursor.x = new_x;
-				}
-		
-				SDL_RenderCopy(renderer, Tile::get_img(human), NULL, &cursor);
-			}
+			}		
 			break;
 	}
 }
