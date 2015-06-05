@@ -360,6 +360,7 @@ void ConnectFour::calculate_move() {
 		}
 	}
 	
+
 	
 	//otherwise choose a random available column:
 	//start at a random column and iterate until one is found
@@ -385,13 +386,32 @@ bool ConnectFour::could_win_on(const int col, const Tile::value val) const {
 
 	
 	//check column
-	int count = 0;
+	int col_count = 0;
 	for(int c = row+1; c <= std::min(static_cast<int>(ROWS-1), row+3); ++c) {
 		if(board[col][c].get_color()==val) {
-			++count;
+			++col_count;
 		}
 	}
-	return (count==3);
+	if(col_count >=3) return true;
 	
+	
+	//check row
+	
+	int left_count = 0;
+	//left side
+	for(int left = col-1; left>=std::max(0, col-3) && board[left][row].get_color()==val; --left) {
+		++left_count;
+	}
+	//right side
+	int right_count = 0;
+	for(int right = col+1; right<=std::min(static_cast<int>(COLUMNS-1), col+3) && board[right][row].get_color()==val; ++right) {
+		++right_count;
+	}
+	
+	if (left_count+right_count>=3) {
+		return true;
+	}
+
+	return false;
 }
 
