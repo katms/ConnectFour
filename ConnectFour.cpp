@@ -417,6 +417,36 @@ bool ConnectFour::could_win_on(const int col, const Tile::value val) const {
 		return true;
 	}
 	
+	//check / diagonal
+	
+	int back_diagonal = 0;
+	//upper left
+	for(int i=col-1,j=row-1; i>=LEFTMOST && j>=TOP && board[i][j].get_color()==val; --i,--j) {
+		++back_diagonal;
+	}
+	
+	for(int i=col+1, j=row+1; i<=RIGHTMOST && j<=BOTTOM && board[i][j].get_color()==val; ++i,++j) {
+		++back_diagonal;
+	}
+	
+	if(back_diagonal>=3) {
+		return true;
+	}
+	
+	
+	//check forward diagonal
+	int forward = 0;
+	for(int i=col-1,j=row+1; i>=LEFTMOST && j<=BOTTOM && board[i][j].get_color()==val; --i,++j) {
+		++forward;
+	}
+	
+	for(int i=col+1, j=row-1; i<=RIGHTMOST && j>=TOP && board[i][j].get_color()==val; ++i,--j) {
+		++forward;
+	}
+	
+	if(forward>=3) {
+		return true;
+	}
 
 	return false;
 }
